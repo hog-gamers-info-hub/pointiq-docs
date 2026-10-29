@@ -10,6 +10,8 @@ export default defineConfig({
   ],
 
   themeConfig: {
+    logo: '/favicon.jpeg',
+    siteTitle: false,
     nav: [
       { text: 'Home', link: '/' },
       { text: 'User Guide', link: '/guide/' },
@@ -37,8 +39,8 @@ export default defineConfig({
     },
 
     footer: {
-      message: 'PointIQ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Free Fire Tournament Results',
-      copyright: 'PointIQ. All rights reserved.'
+      message: 'Free Fire Max Point Calculator',
+      copyright: '\u00A9 2026 PointIQ. All rights reserved.'
     }
   }
 })
