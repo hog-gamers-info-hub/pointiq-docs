@@ -47,3 +47,11 @@
   color: #60a5fa;
   -webkit-text-fill-color: #60a5fa;
 }
+/* PointIQ search highlights */
+.VPLocalSearchBox mark[data-markjs="true"] {
+  background: transparent !important;
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 700;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
