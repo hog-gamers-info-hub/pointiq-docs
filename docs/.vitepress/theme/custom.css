@@ -55,3 +55,42 @@
   padding: 0 !important;
   border-radius: 0 !important;
 }
+/* Compact mobile page navigation */
+@media (max-width: 639px) {
+  .VPDocFooter .prev-next {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 8px;
+  }
+
+  .VPDocFooter .pager {
+    min-width: 0;
+  }
+
+  .VPDocFooter .pager-link {
+    padding: 8px;
+    min-width: 0;
+  }
+
+  .VPDocFooter .desc {
+    font-size: 11px;
+    line-height: 16px;
+    font-family: inherit;
+  }
+
+  .VPDocFooter .title {
+    font-size: 12px;
+    line-height: 17px;
+    font-family: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .VPDocFooter .pager-link.prev .desc::before {
+    content: "\2190\00a0";
+  }
+
+  .VPDocFooter .pager-link.next .desc::after {
+    content: "\00a0\2192";
+  }
+}
