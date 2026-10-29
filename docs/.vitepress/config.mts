@@ -5,6 +5,9 @@ export default defineConfig({
   description: 'Official PointIQ website and documentation.',
   lang: 'en-US',
   base: '/',
+  head: [
+    ['link', { rel: 'icon', type: 'image/jpeg', href: '/favicon.jpeg' }]
+  ],
 
   themeConfig: {
     nav: [
@@ -34,7 +37,7 @@ export default defineConfig({
     },
 
     footer: {
-      message: 'PointIQ Ã¢â‚¬â€ Free Fire Tournament Results',
+      message: 'PointIQ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Free Fire Tournament Results',
       copyright: 'PointIQ. All rights reserved.'
     }
   }
