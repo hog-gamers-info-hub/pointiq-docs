@@ -1,0 +1,49 @@
+/* Circular header logo */
+.VPNavBarTitle .logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Compact footer */
+.VPFooter {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+.VPFooter .message,
+.VPFooter .copyright {
+  line-height: 1.4;
+}
+
+.VPFooter .copyright {
+  margin-top: 3px !important;
+}
+/* Compact mobile homepage spacing */
+@media (max-width: 639px) {
+  .VPHome .VPHomeHero {
+    padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 16px) !important;
+  }
+}
+/* PointIQ two-color homepage branding */
+.VPHomeHero .pointiq-point {
+  color: #1f2937;
+  -webkit-text-fill-color: #1f2937;
+}
+
+.VPHomeHero .pointiq-iq {
+  color: #2563eb;
+  -webkit-text-fill-color: #2563eb;
+}
+
+/* Dark mode */
+.dark .VPHomeHero .pointiq-point {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.dark .VPHomeHero .pointiq-iq {
+  color: #60a5fa;
+  -webkit-text-fill-color: #60a5fa;
+}

@@ -2,8 +2,7 @@
 layout: home
 
 hero:
-  name: PointIQ
-  text: Free Fire Tournament Results
+  name: '<span class="pointiq-point">Point</span><span class="pointiq-iq">IQ</span>'
   tagline: Calculate match results from screenshots, manage tournaments, and export professional standings.
   actions:
     - theme: brand
