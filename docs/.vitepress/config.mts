@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'PointIQ',
   description: 'Official PointIQ website and documentation.',
   lang: 'en-US',
+  base: '/pointiq-docs/',
 
   themeConfig: {
     nav: [
@@ -33,7 +34,7 @@ export default defineConfig({
     },
 
     footer: {
-      message: 'PointIQ — Free Fire Tournament Results',
+      message: 'PointIQ â€” Free Fire Tournament Results',
       copyright: 'PointIQ. All rights reserved.'
     }
   }
