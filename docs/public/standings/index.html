@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://jfllzadfduzktczzdvil.supabase.co; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <title>Overall Standing | PointIQ</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #031225;
+      color: #f6f8ff;
+      --header-title-font-size: 30px;
+      --header-title-line-height: 36px;
+      --header-stage-font-size: 22px;
+      --header-stage-line-height: 26px;
+      --header-overall-font-size: 24px;
+      --header-overall-line-height: 29px;
+      --header-made-with-font-size: 16px;
+      --header-made-with-line-height: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 0; overflow-x: hidden; }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 50% -12%, rgba(11, 56, 111, 0.34), transparent 42%),
+        #031225;
+      padding: calc(24px + env(safe-area-inset-top))
+        max(16px, calc(24px + env(safe-area-inset-right)))
+        calc(24px + env(safe-area-inset-bottom))
+        max(16px, calc(24px + env(safe-area-inset-left)));
+    }
+    main { width: min(100%, 740px); min-width: 0; margin: 0 auto; }
+    .page-header { margin: 0; }
+    h1 {
+      margin: 0;
+      color: #f6f8ff;
+      font-size: var(--header-title-font-size);
+      line-height: var(--header-title-line-height);
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    .tournament-name {
+      text-align: center;
+    }
+    .stage-name {
+      margin: 4px 0 0;
+      color: #91afe0;
+      font-size: var(--header-stage-font-size);
+      line-height: var(--header-stage-line-height);
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+    .page-header-divider {
+      height: 1px;
+      margin: 9px 0;
+      background: rgba(23, 106, 247, 0.24);
+    }
+    .overall-heading {
+      margin: 0;
+      color: #f6f8ff;
+      font-size: var(--header-overall-font-size);
+      line-height: var(--header-overall-line-height);
+      font-weight: 700;
+      text-align: left;
+    }
+    .made-with {
+      margin: 2px 0 0;
+      color: #91afe0;
+      font-size: var(--header-made-with-font-size);
+      line-height: var(--header-made-with-line-height);
+      text-align: left;
+    }
+    .standings-list {
+      display: grid;
+      min-width: 0;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .standing-card {
+      position: relative;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--rank-border);
+      border-radius: 18px;
+      background: rgba(11, 56, 111, 0.42);
+    }
+    .standing-card::after {
+      position: absolute;
+      inset: 1px;
+      border: 1px solid var(--rank-inner-border);
+      border-radius: 17px;
+      content: "";
+      pointer-events: none;
+    }
+    .standing-heading { display: flex; min-width: 0; align-items: center; gap: 12px; }
+    .rank-badge {
+      display: grid;
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid var(--rank-badge-border);
+      border-radius: 12px;
+      background: var(--rank-badge-background);
+      color: var(--rank-accent);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .team-label {
+      min-width: 0;
+      overflow: hidden;
+      color: #f6f8ff;
+      font-size: 18px;
+      line-height: 23px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .divider {
+      height: 1px;
+      margin: 8px 0 6px;
+      background: rgba(23, 106, 247, 0.24);
+    }
+    .metrics {
+      display: grid;
+      min-width: 0;
+      grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr) 12px minmax(0, 1fr);
+      align-items: stretch;
+    }
+    .secondary-metrics { margin-top: 6px; }
+    .metric { min-width: 0; text-align: center; }
+    .metric-label {
+      overflow: hidden;
+      color: #91afe0;
+      font-size: 12px;
+      line-height: 16px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .metric-value {
+      margin-top: 3px;
+      overflow: hidden;
+      color: #f6f8ff;
+      font-size: 18px;
+      line-height: 23px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .total-points .metric-value { color: var(--rank-accent); font-size: 20px; }
+    .metric-divider {
+      width: 1px;
+      min-height: 100%;
+      margin: 0 5px;
+      background: rgba(23, 106, 247, 0.24);
+    }
+    .complete-tie {
+      margin: 6px 0 0;
+      color: #91afe0;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .state { margin-top: 28px; }
+    .state-title {
+      margin: 0;
+      color: #f6f8ff;
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 700;
+    }
+    .state-message {
+      margin: 8px 0 0;
+      color: #91afe0;
+      font-size: 15px;
+      line-height: 21px;
+    }
+    @media (max-width: 430px) {
+      body {
+        padding-top: calc(18px + env(safe-area-inset-top));
+        padding-right: max(14px, calc(18px + env(safe-area-inset-right)));
+        padding-bottom: calc(18px + env(safe-area-inset-bottom));
+        padding-left: max(14px, calc(18px + env(safe-area-inset-left)));
+      }
+      body {
+        --header-title-font-size: 25px;
+        --header-title-line-height: 30px;
+        --header-stage-font-size: 20px;
+        --header-stage-line-height: 24px;
+        --header-overall-font-size: 20px;
+        --header-overall-line-height: 24px;
+        --header-made-with-font-size: 15px;
+        --header-made-with-line-height: 18px;
+      }
+      .standing-card { padding-right: 12px; padding-left: 12px; }
+      .standing-heading { gap: 10px; }
+      .metrics { grid-template-columns: minmax(0, 1fr) 10px minmax(0, 1fr) 10px minmax(0, 1fr); }
+      .metric-divider { margin-right: 4px; margin-left: 4px; }
+      .metric-label { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <main id="app" aria-live="polite">
+    <section class="state" aria-label="Loading">
+      <p class="state-title">Loading tournament standings</p>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const FUNCTION_URL = "https://jfllzadfduzktczzdvil.supabase.co/functions/v1/public-tournament-standings";
+      const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      const app = document.getElementById("app");
+
+      function createTextElement(tagName, className, text) {
+        const element = document.createElement(tagName);
+        element.className = className;
+        element.textContent = String(text);
+        return element;
+      }
+
+      function createPageHeader(tournamentName, stageName) {
+        const header = document.createElement("header");
+        header.className = "page-header";
+        const hasTournamentName = typeof tournamentName === "string" &&
+          tournamentName.trim().length > 0;
+        const hasStageName = typeof stageName === "string" &&
+          stageName.trim().length > 0;
+
+        if (hasTournamentName) {
+          header.append(createTextElement("h1", "tournament-name", tournamentName));
+          if (hasStageName) {
+            header.append(createTextElement("p", "stage-name", stageName));
+          }
+          header.append(createTextElement("div", "page-header-divider", ""));
+        }
+
+        header.append(
+          createTextElement(hasTournamentName ? "h2" : "h1", "overall-heading", "Overall Standings"),
+          createTextElement("p", "made-with", "Made with PointIQ"),
+        );
+        return header;
+      }
+
+      function showUnavailable() {
+        const state = document.createElement("section");
+        state.className = "state";
+        state.setAttribute("aria-label", "Standings unavailable");
+        state.append(createTextElement("p", "state-title", "Standings unavailable"));
+        app.replaceChildren(createPageHeader(), state);
+      }
+
+      function isInteger(value) {
+        return typeof value === "number" && Number.isInteger(value);
+      }
+
+      function isStandingRow(value) {
+        return value !== null && typeof value === "object" && !Array.isArray(value) &&
+          isInteger(value.displayOrder) &&
+          isInteger(value.teamSlotNumber) &&
+          (typeof value.teamName === "string" || value.teamName === null) &&
+          isInteger(value.totalPoints) &&
+          isInteger(value.totalPositionPoints) &&
+          isInteger(value.totalKillPoints) &&
+          isInteger(value.firstPlaceFinishes) &&
+          (isInteger(value.latestMatchPlacement) || value.latestMatchPlacement === null) &&
+          isInteger(value.matchesIncluded) &&
+          typeof value.isCompleteTie === "boolean";
+      }
+
+      function createTextElement(tagName, className, text) {
+        const element = document.createElement(tagName);
+        element.className = className;
+        element.textContent = String(text);
+        return element;
+      }
+
+      function createMetric(label, value, className) {
+        const metric = document.createElement("div");
+        metric.className = className || "metric";
+        metric.append(
+          createTextElement("div", "metric-label", label),
+          createTextElement("div", "metric-value", value),
+        );
+        return metric;
+      }
+
+      function appendMetrics(metrics, items) {
+        items.forEach((item, index) => {
+          metrics.append(createMetric(item.label, item.value, item.className));
+          if (index < items.length - 1) {
+            metrics.append(createTextElement("div", "metric-divider", ""));
+          }
+        });
+      }
+
+      function applyRankStyle(element, rank) {
+        const style = rank === 1
+          ? {
+              accent: "#F6C817",
+              border: "rgba(246, 200, 23, 0.62)",
+              badgeBackground: "rgba(246, 200, 23, 0.18)",
+              badgeBorder: "rgba(246, 200, 23, 0.78)",
+              innerBorder: "rgba(246, 200, 23, 0.18)",
+            }
+          : rank === 2
+            ? {
+                accent: "#B9D8FF",
+                border: "rgba(185, 216, 255, 0.62)",
+                badgeBackground: "rgba(185, 216, 255, 0.18)",
+                badgeBorder: "rgba(185, 216, 255, 0.78)",
+                innerBorder: "rgba(185, 216, 255, 0.18)",
+              }
+            : rank === 3
+              ? {
+                  accent: "#FF9B42",
+                  border: "rgba(255, 155, 66, 0.62)",
+                  badgeBackground: "rgba(255, 155, 66, 0.18)",
+                  badgeBorder: "rgba(255, 155, 66, 0.78)",
+                  innerBorder: "rgba(255, 155, 66, 0.18)",
+                }
+              : {
+                  accent: "#17C9F2",
+                  border: "rgba(23, 201, 242, 0.62)",
+                  badgeBackground: "rgba(23, 201, 242, 0.16)",
+                  badgeBorder: "rgba(23, 201, 242, 0.78)",
+                  innerBorder: "rgba(23, 201, 242, 0.18)",
+                };
+        element.style.setProperty("--rank-accent", style.accent);
+        element.style.setProperty("--rank-border", style.border);
+        element.style.setProperty("--rank-badge-background", style.badgeBackground);
+        element.style.setProperty("--rank-badge-border", style.badgeBorder);
+        element.style.setProperty("--rank-inner-border", style.innerBorder);
+      }
+
+      function createStandingCard(row) {
+        const card = document.createElement("article");
+        card.className = "standing-card";
+        applyRankStyle(card, row.displayOrder);
+
+        const heading = document.createElement("div");
+        heading.className = "standing-heading";
+        const rank = createTextElement("div", "rank-badge", row.displayOrder);
+        applyRankStyle(rank, row.displayOrder);
+        const teamName = row.teamName === null ? "" : row.teamName.trim();
+        heading.append(
+          rank,
+          createTextElement(
+            "div",
+            "team-label",
+            teamName || `Team slot - ${row.teamSlotNumber}`,
+          ),
+        );
+        card.append(heading, createTextElement("div", "divider", ""));
+
+        const primaryMetrics = document.createElement("div");
+        primaryMetrics.className = "metrics";
+        appendMetrics(primaryMetrics, [
+          { label: "Kills", value: row.totalKillPoints },
+          { label: "Position Pts", value: row.totalPositionPoints },
+          { label: "Total Pts", value: row.totalPoints, className: "metric total-points" },
+        ]);
+
+        const secondaryMetrics = document.createElement("div");
+        secondaryMetrics.className = "metrics secondary-metrics";
+        appendMetrics(secondaryMetrics, [
+          { label: "Wins", value: row.firstPlaceFinishes },
+          {
+            label: "Latest",
+            value: row.latestMatchPlacement === null ? "—" : `#${row.latestMatchPlacement}`,
+          },
+          { label: "Matches", value: row.matchesIncluded },
+        ]);
+        card.append(
+          primaryMetrics,
+          createTextElement("div", "divider", ""),
+          secondaryMetrics,
+        );
+
+        if (row.isCompleteTie) {
+          card.append(
+            createTextElement(
+              "p",
+              "complete-tie",
+              "Complete tie; displayed in Team Slot order.",
+            ),
+          );
+        }
+        return card;
+      }
+
+      function renderStandings(rows, tournamentName, stageName) {
+        app.replaceChildren(createPageHeader(tournamentName, stageName));
+
+        if (rows.length === 0) {
+          const emptyState = document.createElement("section");
+          emptyState.className = "state";
+          emptyState.setAttribute("aria-label", "No finalized matches");
+          emptyState.append(
+            createTextElement("p", "state-title", "No finalized matches yet"),
+            createTextElement("p", "state-message", "Finalize a match to see tournament standings."),
+          );
+          app.append(emptyState);
+          return;
+        }
+
+        const list = document.createElement("section");
+        list.className = "standings-list";
+        list.setAttribute("aria-label", "Overall standings");
+        rows.forEach((row) => list.append(createStandingCard(row)));
+        app.append(list);
+      }
+
+      async function loadStandings() {
+        const token = new URLSearchParams(window.location.search).get("token");
+        if (token === null || !UUID_PATTERN.test(token)) {
+          showUnavailable();
+          return;
+        }
+
+        try {
+          const response = await fetch(`${FUNCTION_URL}?token=${encodeURIComponent(token)}`);
+          if (!response.ok) throw new Error("request failed");
+          const payload = await response.json();
+          if (!payload || typeof payload !== "object" || !Array.isArray(payload.standings) ||
+            payload.standings.length > 12 || !payload.standings.every(isStandingRow)) {
+            throw new Error("invalid response");
+          }
+          const tournamentName = typeof payload.tournamentName === "string"
+            ? payload.tournamentName
+            : null;
+          const stageName = typeof payload.stageName === "string"
+            ? payload.stageName
+            : null;
+          renderStandings(payload.standings, tournamentName, stageName);
+        } catch {
+          showUnavailable();
+        }
+      }
+
+      loadStandings();
+    })();
+  </script>
+</body>
+</html>
